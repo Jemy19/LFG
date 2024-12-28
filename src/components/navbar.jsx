@@ -1,7 +1,11 @@
 import Link from "next/link"
 import { MaxWidthWrapper} from "./max-width-wrapper"
+import { SignOutButton } from "@clerk/nextjs"
+import { Button } from "./ui/button"
 
 export const Navbar = () => {
+    const user = true
+
     return (
         <nav className="sticky z-[100] h-16 inset-x-0 top-0 w-full border-b border-gray-200 bh-white/80 backdrop-blur-lg transition-all">
             <MaxWidthWrapper>
@@ -10,7 +14,19 @@ export const Navbar = () => {
                         Ping<span className="text-brand-700">Panda</span>
                     </Link>
                 </div>
+
+                <div className="h-full flex items-center space-x-4">
+                    {user ?
+                    <>
+                        <SignOutButton>
+                            <Button className=""></Button>
+                        </SignOutButton>
+                    </> 
+                    : null}
+                </div>
             </MaxWidthWrapper>
         </nav>
+
+        
     )
-}
+} 
