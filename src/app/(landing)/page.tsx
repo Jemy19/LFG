@@ -3,6 +3,8 @@ import { MaxWidthWrapper } from "../../components/max-width-wrapper"
 import { Check } from "lucide-react"
 import { ShinyButton } from "../../components/shiny-button"
 import { MockDiscordUI } from "@/components/mock-discord-ui"
+import { AnimatedList, AnimatedListItem } from "@/components/ui/animated-list"
+import { DiscordMessage } from "@/components/discord-message"
 const Page = () => {
   return (
     <>
@@ -43,7 +45,55 @@ const Page = () => {
        <div className="relative mx-auto">
         <MaxWidthWrapper className="relative">
           <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-              <MockDiscordUI></MockDiscordUI>
+              <MockDiscordUI>
+                <AnimatedList>
+                  <AnimatedListItem>
+                    <DiscordMessage
+                      avatarSrc="/brand-asset-profile-picture.png"
+                      avatarAlt="PingPanda"
+                      username="PingPanda"
+                      timestamp="Today at 12:35PM"
+                      badgeText="SignUp"
+                      badgeColor="#43b581"
+                      title="🤖 New User Signed Up"
+                      content={{
+                        name: "Jeremy Gellido",
+                        email: "jgellid@gmail.com"
+                      }}
+                    />
+                  </AnimatedListItem>
+                  <AnimatedListItem>
+                    <DiscordMessage
+                      avatarSrc="/brand-asset-profile-picture.png"
+                      avatarAlt="PingPanda"
+                      username="PingPanda"
+                      timestamp="Today at 12:35PM"
+                      badgeText="SignUp"
+                      badgeColor="#43b581"
+                      title="🤖 New User Signed Up"
+                      content={{
+                        name: "Jeremy Gellido",
+                        email: "jgellid@gmail.com"
+                      }}
+                    />
+                  </AnimatedListItem>
+                  <AnimatedListItem>
+                    <DiscordMessage
+                      avatarSrc="/brand-asset-profile-picture.png"
+                      avatarAlt="PingPanda"
+                      username="PingPanda"
+                      timestamp="Today at 12:35PM"
+                      badgeText="SignUp"
+                      badgeColor="#43b581"
+                      title="🤖 New User Signed Up"
+                      content={{
+                        name: "Jeremy Gellido",
+                        email: "jgellid@gmail.com"
+                      }}
+                    />
+                  </AnimatedListItem>
+                </AnimatedList>
+              </MockDiscordUI>
           </div>
         </MaxWidthWrapper>    
        </div>
