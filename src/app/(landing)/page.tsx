@@ -53,8 +53,8 @@ const Page = () => {
                       avatarAlt="PingPanda"
                       username="PingPanda"
                       timestamp="Today at 12:35PM"
-                      badgeText="SignUp"
-                      badgeColor="#43b581"
+                      badgeText="Chat"
+                      badgeColor="#fc032c"
                       title="🤖 New User Signed Up"
                       content={{
                         name: "Jeremy Gellido",
@@ -68,12 +68,13 @@ const Page = () => {
                       avatarAlt="PingPanda"
                       username="PingPanda"
                       timestamp="Today at 12:35PM"
-                      badgeText="SignUp"
-                      badgeColor="#43b581"
-                      title="🤖 New User Signed Up"
+                      badgeText="Revenue"
+                      badgeColor="#faa61a"
+                      title="🤖 PAYMENT SUCCESSFUL"
                       content={{
-                        name: "Jeremy Gellido",
-                        email: "jgellid@gmail.com"
+                        amount: "$100",
+                        email: "toothlezz09@gmail.com",
+                        plan: "Pro Plan"
                       }}
                     />
                   </AnimatedListItem>
