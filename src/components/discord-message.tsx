@@ -70,7 +70,7 @@ export const DiscordMessage = ({
 
                     {Object.entries(content).map(([key, value]) => (
                         <p key={key} className="text-[#dcddde] text-sm/6">
-                            <span className="text-[#b9bbbe">{key}</span>
+                            <span className="text-[#b9bbbe]">{key}: </span>
                             {value}
                         </p>
                     ))}
