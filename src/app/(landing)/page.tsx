@@ -1,6 +1,6 @@
 import { Heading } from "../../components/heading"
 import { MaxWidthWrapper } from "../../components/max-width-wrapper"
-import { Check } from "lucide-react"
+import { Check, Star } from "lucide-react"
 import { ShinyButton } from "../../components/shiny-button"
 import { MockDiscordUI } from "@/components/mock-discord-ui"
 import { AnimatedList, AnimatedListItem } from "@/components/ui/animated-list"
@@ -8,6 +8,7 @@ import { DiscordMessage } from "@/components/discord-message"
 import Image from "next/image"
 import {Prism as SyntaxHighlighter} from "react-syntax-highlighter"
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism"
+import { Icons } from "@/components/icons"
 const Page = () => {
   const codeSnippet = `await fetch("http://localhost:3000/api/v1/events", {
   method: "POST",
@@ -254,11 +255,69 @@ const Page = () => {
           
           <div className="mx-auto grid max-w-2xl grid-cols-1 px-4 lg:mx-0 lg:max-w-none lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-gray-200">
             {/* First customer Review */}
-            <div className="flex flex-auto flex-col gap-4 bg-brand-25 p-6 sm:p-8 lg:p-16 rounder-t-[2rem] lg:rounded-tr-none lg:rounded-l-[2rem]">
+            <div className="flex flex-auto flex-col gap-4 bg-brand-25 p-6 sm:p-8 lg:p-16 rounded-t-[2rem] lg:rounded-tr-none lg:rounded-l-[2rem]">
+              <div className="flex gap-0.5 mb-2 justify-center lg:justify-start">
+                <Star className="size-5 text-brand-600 fill-brand-600"/>
+                <Star className="size-5 text-brand-600 fill-brand-600"/>
+                <Star className="size-5 text-brand-600 fill-brand-600"/>
+                <Star className="size-5 text-brand-600 fill-brand-600"/>
+                <Star className="size-5 text-brand-600 fill-brand-600"/>
+              </div>
 
+              <p className="text-base sm:text-lg lg:text-lg/8 font-medium tracking-tight text-brand-950 text-center lg:text-left text-pretty">
+                PingPanda has been a game-changer for us. We can now monitor our SaaS in real-time and get notified about critical events instantly.
+              </p>
+
+              <div className="flex flex-col justify-center lg:justify-start sm:flex-row items-center sm:items-start gap-4 mt-2">
+                <Image 
+                src="/user-2.png" 
+                className="rounded-full" 
+                width={48} height={48} 
+                alt="Jacob Gellido"/>
+                <div className="flex flex-col items-center sm:items-start">
+                  <p className="font-semibold flex items-center">
+                    Jacob Gellido
+                    <Icons.verificationBadge className="size-4 inline-block ml-1.5"/>
+                  </p>
+                  <p className="text-sm text-gray-600">CEO, Gellido Inc.</p>
+                </div>
+              </div>  
+            </div>
+            {/* Second customer Review */}
+            <div className="flex flex-auto flex-col gap-4 bg-brand-25 p-6 sm:p-8 lg:p-16 rounder-B-[2rem] lg:rounded-bl-none lg:rounded-r-[2rem]">
+              <div className="flex gap-0.5 mb-2 justify-center lg:justify-start">
+                <Star className="size-5 text-brand-600 fill-brand-600"/>
+                <Star className="size-5 text-brand-600 fill-brand-600"/>
+                <Star className="size-5 text-brand-600 fill-brand-600"/>
+                <Star className="size-5 text-brand-600 fill-brand-600"/>
+                <Star className="size-5 text-brand-600 fill-brand-600"/>
+              </div>
+
+              <p className="text-base sm:text-lg lg:text-lg/8 font-medium tracking-tight text-brand-950 text-center lg:text-left text-pretty">
+                PingPands's been paying off for our team. We can now monitor our SaaS in real-time and get notified about critical events instantly.
+              </p>
+
+              <div className="flex flex-col justify-center lg:justify-start sm:flex-row items-center sm:items-start gap-4 mt-2">
+                <Image 
+                src="/user-2.png" 
+                className="rounded-full" 
+                width={48} height={48} 
+                alt="Jacob Gellido"/>
+                <div className="flex flex-col items-center sm:items-start">
+                  <p className="font-semibold flex items-center">
+                    Jacob Gellido
+                    <Icons.verificationBadge className="size-4 inline-block ml-1.5"/>
+                  </p>
+                  <p className="text-sm text-gray-600">CEO, Gellido Inc.</p>
+                </div>
+              </div>
             </div>
           </div>
+        <ShinyButton href="/sign-up" className="realtive z-10 h-14 w-full max-w-xs text-base shadow-lg transition-shadow duration-300 hover:shadow-xl">
+          Start For Free Today
+        </ShinyButton>
         </MaxWidthWrapper>
+
       </section>
     </>
   )
