@@ -2,9 +2,18 @@
 
 import { Heading } from "@/components/heading";
 import { LoadingSpinner } from "@/components/loading-spinner";
+import { usePrefetchQuery } from "@tanstack/react-query";
 import { LucideProps } from "lucide-react";
 
 const Page = () => {
+
+    const {} = usePrefetchQuery({
+        queryFn: () => {
+            client
+        }
+
+    })
+
     return (
     <div className="flex w-full flex-1 items-center justify-center px-4">
         <BackgroundPattern className="absolute inset-0 left-1/2 z-0 -translate-x-1/2 opacity-75"/>
