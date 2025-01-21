@@ -1,6 +1,8 @@
 import { j } from "./__internals/j"
 
-
+const authmiddleware = j.middleware(({next}) => {
+    return next({})
+})
 /**
  * Public (unauthenticated) procedures
  *
@@ -8,3 +10,4 @@ import { j } from "./__internals/j"
  */
 export const baseProcedure = j.procedure
 export const publicProcedure = baseProcedure
+export const privateProcedure = publicProcedure.use(authmiddleware)
