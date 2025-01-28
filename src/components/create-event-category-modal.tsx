@@ -1,6 +1,6 @@
 "use client"
 
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { PropsWithChildren, useState } from "react";
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -10,6 +10,8 @@ import { Modal } from "./ui/modal";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { cn } from "@/utils";
+import { Button } from "./ui/button";
+import { client } from "@/lib/client";
 
 
 const EVENT_CATEGORY_VALIDATOR = z.object ({
@@ -53,6 +55,17 @@ export const CreateEventCategoryModal = ({ children }: PropsWithChildren) => {
     const [isOpen, setIsOpen] = useState(false)
     const queryClient = useQueryClient()
 
+    const { mutate: createEventCategory, isPending} = useMutation({
+        mutationFn: async (data: EventCategoryForm) => {
+            await client.category.creteEventCategory.$post(data)
+        },
+        // updates the dashboard to include new created user category
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey:["user-event-categories"] })
+            setIsOpen(false)
+        }
+    })
+
     const { register, handleSubmit, watch, setValue, formState: { errors },} = useForm<EventCategoryForm>({
         resolver: zodResolver(EVENT_CATEGORY_VALIDATOR), 
     })
@@ -61,7 +74,7 @@ export const CreateEventCategoryModal = ({ children }: PropsWithChildren) => {
     const selectedEmoji = watch("emoji")
 
     const onSubmit = (data: EventCategoryForm) => {
-
+        createEventCategory(data)
     }
 
     return (
@@ -145,6 +158,16 @@ export const CreateEventCategoryModal = ({ children }: PropsWithChildren) => {
                                 </p> 
                             ) : null }
                         </div>
+                    </div>
+                    <div className="flex justify-end space-x-3 pt-4 border-t">
+                        <Button 
+                            type="button"
+                            variant="outline"
+                            onClick={() => setIsOpen(false)}
+                        >
+                            Cancel
+                        </Button>
+                        <Button disabled={isPending} type="submit">{ isPending ? "Creating..." : "Create Category"}{" "}</Button>
                     </div>
                 </form>
             </Modal>
