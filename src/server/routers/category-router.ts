@@ -7,6 +7,7 @@ import { CATEGORY_NAME_VALIDATOR } from "@/lib/validators/category-validator";
 import { parseColor } from "@/utils";
 
 export const categoryRouter = router({
+    //private procedure is for logged in pages
     getEventCategories: privateProcedure.query(async({ c, ctx}) => {
         const categories = await db.eventCategory.findMany({
             where: { userId: ctx.user.id },
@@ -107,5 +108,19 @@ export const categoryRouter = router({
                 }
             })
             return c.json({ eventCategory })
+        }),
+
+        insertQuickStartCategories: privateProcedure.mutation(async ({ ctx, c }) => {
+            const categories = await db.eventCategory.createMany({
+                data: [
+                    {name: "Bug", emoji: "🔔", color: 0xff6b6b},
+                    {name: "Sale", emoji: "🎉", color: 0xffeb3b},
+                    {name: "Question", emoji: "🚀", color: 0x6c5ce7},
+                ].map((category) => ({
+                    ...category,
+                    userId: ctx.user.id,
+                })),
+            })
+            return c.json({ success: true, count: categories.count})
         }),
 })
