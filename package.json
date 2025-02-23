@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.9.6",
+    "@discordjs/rest": "^2.4.3",
     "@hookform/resolvers": "^3.10.0",
     "@neondatabase/serverless": "^0.9.4",
     "@prisma/adapter-neon": "^5.18.0",
@@ -51,6 +52,7 @@
     "@types/react-dom": "^18.3.5",
     "@types/react-syntax-highlighter": "^15.5.13",
     "cypress": "^13.17.0",
+    "discord-api-types": "^0.37.119",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "postcss": "^8",
