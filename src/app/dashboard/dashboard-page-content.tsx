@@ -86,7 +86,7 @@ export const DashboardPageContent = () => {
                                     </span>
                                     <span className="ml-1">
                                         {category.lastPing 
-                                            ? formatDistanceToNow(category.lastPing) + "ago"
+                                            ? formatDistanceToNow(category.lastPing) + " ago"
                                             : "Never"
                                         }
                                     </span>
