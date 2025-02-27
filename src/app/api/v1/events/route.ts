@@ -167,10 +167,12 @@ export const POST = async ( req: NextRequest ) => {
         eventId: event.id,
     })
     } catch (err) {
+        // good error handling
+        console.error(err)
         if(err instanceof z.ZodError) {
             return NextResponse.json({ message: err.message}, {status: 422})
         }
 
-        return NextResponse.json({message: "Internal server error"})
+        return NextResponse.json({message: "Internal server error"}, {status: 500})
     }
 }
