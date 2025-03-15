@@ -11,7 +11,7 @@ interface PageProps {
 }
 
 const Page = async ({params}: PageProps) => {
-    if (typeof params.name !== "string") notFound()
+    if (typeof params.name !== "string") return notFound()
 
     const auth = await currentUser()
 

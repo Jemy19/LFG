@@ -49,7 +49,7 @@ export const POST = async ( req: NextRequest ) => {
     // Actual Logic
 
     const currentData = new Date()
-    const currentMonth = currentData.getMonth() + 1
+    const currentMonth = currentData.getMonth() + 1;
     const currentYear = currentData.getFullYear()
 
     const quota = await db.quota.findUnique({
@@ -136,7 +136,10 @@ export const POST = async ( req: NextRequest ) => {
             where: { id: event.id },
             data: { deliveryStatus: "DELIVERED"}
         })
-
+        console.log("User ID:", user?.id);
+        console.log("Month:", currentMonth);
+        console.log("Year:", currentYear);
+        
         await db.quota.upsert({
             where: {userId: user.id, month: currentMonth, year: currentYear},
             update: { count: { increment: 1 } },

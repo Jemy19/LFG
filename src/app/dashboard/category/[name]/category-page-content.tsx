@@ -1,6 +1,6 @@
 "use client"
 
-import { EventCategory } from "@prisma/client"
+import { Event, EventCategory } from "@prisma/client"
 import { useQuery } from "@tanstack/react-query"
 import { EmptyCategoryState } from "./empty-category-state"
 import { useMemo, useState } from "react"
@@ -8,8 +8,13 @@ import { useSearchParams } from "next/navigation"
 import { client } from "@/lib/client"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card } from "@/components/ui/card"
-import { BarChart } from "lucide-react"
+import { ArrowDown, ArrowUpDown, BarChart } from "lucide-react"
 import { isAfter, isToday, startOfMonth, startOfWeek } from "date-fns"
+import { ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, Row, SortingState, useReactTable } from "@tanstack/react-table"
+import { Button } from "@/components/ui/button"
+import { cn } from "@/utils"
+import { Heading } from "@/components/heading"
+import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 interface CategoryPageContentProps {
     hasEvents: boolean
@@ -60,6 +65,82 @@ export const CategoryPageContent = ({hasEvents: initialHasEvents, category }: Ca
         refetchOnWindowFocus: false,
         enabled: pollingData.hasEvents,
     })
+
+    const columns: ColumnDef<Event>[] = useMemo(() => [
+        {
+            accessorKey: "category",
+            header: "category",
+            cell: () => <span>{category.name || "Uncategorized"}</span>,
+        },
+        {
+            accessorKey: "createdAt",
+            header: ({column}) => {
+                <Button 
+                    variant="ghost" 
+                    onClick={() => 
+                        column.toggleSorting(column.getIsSorted() === "asc")
+                    }
+                >    
+                Date <ArrowUpDown className="ml-2 size-4"/>
+                </Button>
+            },
+            cell: ({ row }) => {
+                return new Date(row.getValue("createdAt")).toLocaleDateString()
+            },
+        },
+        ...(data?.events[0] 
+            ? Object.keys(data.events[0].fields as object).map((field) => ({
+                accessorFn: (row: Event) => 
+                    (row.fields as Record<string, any>)[field],
+                header: field,
+                cell: ({ row }: {row: Row<Event> }) => (
+                    row.original.fields as Record<string, any>)[field] || "-" 
+            })) 
+            : []),
+            {
+                accessorKey: "deliveryStatus",
+                header: "Delivery Status",
+                cell: ({row}) => (
+                    <span
+                        className={cn("px-2 py-1 rounded-full text-xs font-semibold", {
+                            "bg-green-100 text-green-800":
+                            row.getValue("deliveryStatus") === "DELIVERED",
+                            "bg-red-100 text-red-800":
+                            row.getValue("deliveryStatus") === "FAILED",
+                            "bg-yellow-100 text-yellow-800":
+                            row.getValue("deliveryStatus") === "PENDING",
+                        })}
+                    >
+                        {row.getValue("deliveryStatus")}
+                    </span>
+                )
+            }
+    ], [category.name, data?.events])
+
+    const [sorting, setSorting] = useState<SortingState>([])
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+
+    const table = useReactTable({
+        data: data?.events || [],
+        columns,
+        getCoreRowModel: getCoreRowModel(),
+        onSortingChange: setSorting,
+        getSortedRowModel: getSortedRowModel(),
+        onColumnFiltersChange: setColumnFilters,
+        getFilteredRowModel: getFilteredRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        manualPagination: true,
+        pageCount: Math.ceil((data?.eventsCount || 0) / pagination.pageSize),
+        onPaginationChange: setPagination,
+        state: {
+            sorting,
+            columnFilters,
+            pagination,
+        }
+
+    })
+
+    
     // useMemo used so that it wont recalculate unless page refreshed
     const numericFieldSums = useMemo(() => {
         if (!data?.events || data.events.length === 0) return {}
@@ -180,6 +261,34 @@ export const CategoryPageContent = ({hasEvents: initialHasEvents, category }: Ca
                         </div>
                     </TabsContent>
             </Tabs>
+
+            <div className="flex flex-col gap-4">
+                <div className="flex items-center justify between">
+                    <div className="w-full flex flex-col gap-4">
+                        <Heading className="text-3xl">Events overview</Heading>
+                    </div>
+                </div>
+                <Card contentClassName="px-6 py-4">
+                    <Table>
+                        <TableHeader>
+                            {table.getHeaderGroups().map((headerGroup) => (
+                                <TableRow key={headerGroup.id}>
+                                    {headerGroup.headers.map((header) => (
+                                        <TableHead key={header.id}>
+                                            {header.isPlaceholder 
+                                                ? null 
+                                                : flexRender(
+                                                    header.column.columnDef.header,
+                                                    header.getContext()             
+                                                    )}
+                                        </TableHead>
+                            ))}
+                                </TableRow>
+                            ))}
+                        </TableHeader>
+                    </Table>
+                </Card>
+            </div>
         </div>
     )
 }
